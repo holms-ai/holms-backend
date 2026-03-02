@@ -257,7 +257,7 @@ adapters/
 The fastest way to run Holms. Requires [Docker](https://docs.docker.com/get-docker/) and a Claude authentication method (subscription or API key).
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/matthias-trip/holms/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/holms-ai/holms-backend/main/install.sh | bash
 ```
 
 This will pull the latest image, set up a `~/.holms` directory with data persistence, and start Holms with automatic updates via [Watchtower](https://containrrr.dev/watchtower/). The dashboard will be at [http://localhost:3100](http://localhost:3100).
@@ -287,7 +287,7 @@ ANTHROPIC_API_KEY=sk-ant-api03-... curl -fsSL .../install.sh | bash
 
 ```bash
 # Custom port, custom directory, no auto-updates
-HOLMS_DIR=/opt/holms HOLMS_PORT=8080 bash <(curl -fsSL https://raw.githubusercontent.com/matthias-trip/holms/main/install.sh) --no-auto-update
+HOLMS_DIR=/opt/holms HOLMS_PORT=8080 bash <(curl -fsSL https://raw.githubusercontent.com/holms-ai/holms-backend/main/install.sh) --no-auto-update
 ```
 
 **Managing your installation:**
@@ -308,7 +308,7 @@ docker compose -f ~/.holms/docker-compose.yml pull && docker compose -f ~/.holms
 If you prefer to manage the compose file yourself, clone the repo and use the included `docker-compose.yml`:
 
 ```bash
-git clone https://github.com/matthias-trip/holms.git
+git clone https://github.com/holms-ai/holms-backend.git
 cd holms
 
 # Add your credentials

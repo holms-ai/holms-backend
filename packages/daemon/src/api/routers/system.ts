@@ -31,14 +31,14 @@ async function fetchLatestVersion(): Promise<string | null> {
   try {
     // 1. Get anonymous token
     const tokenRes = await fetch(
-      "https://ghcr.io/token?scope=repository:matthias-trip/holms:pull"
+      "https://ghcr.io/token?scope=repository:holms-ai/holms-backend:pull"
     );
     if (!tokenRes.ok) return null;
     const { token } = (await tokenRes.json()) as { token: string };
 
     // 2. List tags
     const tagsRes = await fetch(
-      "https://ghcr.io/v2/matthias-trip/holms/tags/list",
+      "https://ghcr.io/v2/holms-ai/holms-backend/tags/list",
       { headers: { Authorization: `Bearer ${token}` } }
     );
     if (!tagsRes.ok) return null;

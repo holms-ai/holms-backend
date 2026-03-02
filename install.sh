@@ -3,11 +3,11 @@ set -euo pipefail
 
 # ── Holms Installer ──────────────────────────────────────────────────
 # Usage:
-#   curl -fsSL https://raw.githubusercontent.com/matthias-trip/holms/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/holms-ai/holms-backend/main/install.sh | bash
 #   curl -fsSL ... | bash -s -- --no-auto-update
 #   HOLMS_DIR=/opt/holms HOLMS_PORT=8080 bash install.sh
 
-HOLMS_IMAGE="ghcr.io/matthias-trip/holms:latest"
+HOLMS_IMAGE="ghcr.io/holms-ai/holms-backend:latest"
 HOLMS_DIR="${HOLMS_DIR:-$HOME/.holms}"
 HOLMS_PORT="${HOLMS_PORT:-3100}"
 AUTO_UPDATE=true

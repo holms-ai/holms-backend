@@ -1,6 +1,6 @@
 services:
   holms:
-    image: ghcr.io/matthias-trip/holms:latest
+    image: ghcr.io/holms-ai/holms-backend:latest
     ports:
       - "${HOLMS_PORT:-3100}:3100"
     volumes:
