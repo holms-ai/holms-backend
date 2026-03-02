@@ -7,7 +7,7 @@ on:
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: matthias-trip/holms
+  IMAGE_NAME: holms-ai/holms-backend
 
 jobs:
   build:

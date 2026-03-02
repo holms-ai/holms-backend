@@ -39,7 +39,7 @@ FROM node:20-slim
 ARG HOLMS_VERSION=dev
 ENV HOLMS_VERSION=${HOLMS_VERSION}
 
-LABEL org.opencontainers.image.source="https://github.com/matthias-trip/holms"
+LABEL org.opencontainers.image.source="https://github.com/holms-ai/holms-backend"
 LABEL org.opencontainers.image.description="Holms — AI-driven home automation"
 LABEL org.opencontainers.image.licenses="MIT"
 
@@ -90,12 +90,11 @@ ENV HOLMS_HF_CACHE_DIR=/models
 ENV HOLMS_FRONTEND_DIST=/app/packages/frontend/dist
 ENV HOLMS_ADAPTERS_DIR=/adapters-user
 
-# Apple MapKit JS — mount key file via secret/volume at runtime
-# e.g. -v /path/to/AuthKey.p8:/secrets/mapkit.p8:ro
-ENV HOLMS_MAPKIT_KEY_PATH=/secrets/mapkit.p8
-# Set these via docker run -e or compose environment:
-#   HOLMS_MAPKIT_KEY_ID=<your-key-id>
-#   HOLMS_MAPKIT_TEAM_ID=<your-team-id>
+# Apple MapKit JS — mount key file via secret/volume at runtime:
+#   -v /path/to/AuthKey.p8:/secrets/mapkit.p8:ro
+#   -e HOLMS_MAPKIT_KEY_PATH=/secrets/mapkit.p8
+#   -e HOLMS_MAPKIT_KEY_ID=<your-key-id>
+#   -e HOLMS_MAPKIT_TEAM_ID=<your-team-id>
 
 # Ensure writable directories exist and are owned by holms user
 RUN mkdir -p /data /models /adapters-user /secrets && chown -R holms:holms /app /data /models /adapters-user /secrets
