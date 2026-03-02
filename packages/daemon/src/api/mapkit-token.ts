@@ -15,7 +15,7 @@ let cachedKey: CryptoKey | null = null;
 let cachedToken: { jwt: string; expiresAt: number } | null = null;
 
 function getConfig() {
-  const keyPath = process.env.HOLMS_MAPKIT_KEY_PATH;
+  const keyPath = process.env.HOLMS_MAPKIT_KEY_PATH || "/secrets/mapkit.p8";
   const keyId = process.env.HOLMS_MAPKIT_KEY_ID;
   const teamId = process.env.HOLMS_MAPKIT_TEAM_ID;
 
