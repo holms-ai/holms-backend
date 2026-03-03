@@ -1,6 +1,5 @@
 import { useState, useCallback } from "react";
 import { MapPin, Plus, Trash2, Pencil, User, Check, X } from "lucide-react";
-import { Button } from "@heroui/react";
 import { trpc } from "../trpc";
 import type { LocationZone } from "@holms/shared";
 import ZoneMapPicker from "./ZoneMapPicker";
@@ -60,20 +59,20 @@ function ZoneCard({
       role="button"
       tabIndex={0}
       onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onSelect(); } }}
-      className="group w-full text-left rounded-lg px-3 py-2.5 transition-all duration-150 cursor-pointer"
+      className="group w-full text-left rounded-lg px-3 py-2.5 transition-all duration-150 cursor-pointer animate-fade-in"
       style={{
-        background: isSelected ? "var(--gray-3)" : "var(--gray-1)",
-        border: isSelected ? "1px solid var(--accent-a7)" : "1px solid var(--gray-a5)",
+        background: isSelected ? "var(--gray-3)" : "transparent",
+        border: isSelected ? "1px solid var(--accent-a5)" : "1px solid var(--gray-a5)",
       }}
     >
       <div className="flex items-center gap-2.5">
         <div
-          className="flex-shrink-0 flex items-center justify-center rounded-md"
+          className="flex-shrink-0 flex items-center justify-center rounded-lg"
           style={{
-            width: 28,
-            height: 28,
-            background: isSelected ? "var(--accent-a3)" : "var(--gray-3)",
-            color: isSelected ? "var(--accent-11)" : "var(--gray-9)",
+            width: 34,
+            height: 34,
+            background: isSelected ? "var(--accent-a3)" : "var(--gray-a3)",
+            color: isSelected ? "var(--accent-9)" : "var(--gray-9)",
           }}
         >
           <MapPin size={14} />
@@ -90,7 +89,7 @@ function ZoneCard({
           onClick={(e) => { e.stopPropagation(); onDelete(zone.id); }}
           className="p-1 rounded opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
           style={{ color: "var(--gray-7)" }}
-          onMouseEnter={(e) => { e.currentTarget.style.color = "var(--danger)"; e.currentTarget.style.opacity = "1"; }}
+          onMouseEnter={(e) => { e.currentTarget.style.color = "var(--err)"; e.currentTarget.style.opacity = "1"; }}
           onMouseLeave={(e) => { e.currentTarget.style.color = "var(--gray-7)"; e.currentTarget.style.opacity = ""; }}
         >
           <Trash2 size={12} />
@@ -213,20 +212,27 @@ export default function ZonesPanel() {
       >
         <h3 className="text-base font-bold" style={{ color: "var(--gray-12)" }}>Zones</h3>
         {mode === "idle" && (
-          <Button
-            size="sm"
-            color="primary"
-            variant="flat"
-            startContent={<Plus size={14} />}
-            onPress={startCreate}
+          <button
+            onClick={startCreate}
+            className="flex items-center gap-1.5 text-xs font-medium px-3 py-2 rounded-lg cursor-pointer transition-colors duration-150"
+            style={{ color: "var(--gray-12)", background: "var(--gray-a3)", border: "1px solid var(--gray-a5)" }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "var(--accent-a3)"; e.currentTarget.style.borderColor = "var(--accent-a5)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "var(--gray-a3)"; e.currentTarget.style.borderColor = "var(--gray-a5)"; }}
           >
+            <Plus size={14} />
             Add zone
-          </Button>
+          </button>
         )}
         {mode !== "idle" && (
-          <Button size="sm" variant="bordered" onPress={resetMode}>
+          <button
+            onClick={resetMode}
+            className="flex items-center gap-1.5 text-xs font-medium px-3 py-2 rounded-lg cursor-pointer transition-colors duration-150"
+            style={{ color: "var(--gray-11)", background: "transparent", border: "1px solid var(--gray-a5)" }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "var(--gray-a3)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}
+          >
             Cancel
-          </Button>
+          </button>
         )}
       </div>
 
@@ -250,9 +256,9 @@ export default function ZonesPanel() {
                 {personLocations.map(({ person, location }) => (
                   <div
                     key={person.id}
-                    className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px]"
+                    className="flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[11px] animate-fade-in"
                     style={{
-                      background: "var(--gray-1)",
+                      background: "var(--gray-a3)",
                       border: "1px solid var(--gray-a5)",
                       color: "var(--gray-12)",
                     }}
@@ -300,7 +306,7 @@ export default function ZonesPanel() {
 
         {/* Right column — map + controls */}
         <div className="flex-1 flex flex-col overflow-hidden">
-          <div className="flex-1 p-4 pb-0">
+          <div className="flex-1 p-3">
             <ZoneMapPicker
               center={mapCenter}
               radius={mapState?.radius ?? 100}
@@ -345,17 +351,22 @@ export default function ZonesPanel() {
                       if (e.key === "Escape") resetMode();
                     }}
                   />
-                  <Button
-                    size="sm"
-                    color="primary"
-                    variant="flat"
-                    isDisabled={!nameInput.trim()}
-                    isLoading={isSaving}
-                    onPress={handleSave}
-                    startContent={<Check size={14} />}
+                  <button
+                    onClick={handleSave}
+                    disabled={!nameInput.trim() || isSaving}
+                    className="flex items-center gap-1.5 text-xs font-medium px-3 py-2 rounded-lg cursor-pointer transition-colors duration-150"
+                    style={{
+                      color: !nameInput.trim() || isSaving ? "var(--gray-8)" : "var(--gray-12)",
+                      background: "var(--gray-a3)",
+                      border: "1px solid var(--gray-a5)",
+                      opacity: !nameInput.trim() || isSaving ? 0.5 : 1,
+                    }}
+                    onMouseEnter={(e) => { if (!e.currentTarget.disabled) { e.currentTarget.style.background = "var(--accent-a3)"; e.currentTarget.style.borderColor = "var(--accent-a5)"; } }}
+                    onMouseLeave={(e) => { e.currentTarget.style.background = "var(--gray-a3)"; e.currentTarget.style.borderColor = "var(--gray-a5)"; }}
                   >
-                    {mode === "create" ? "Create" : "Save"}
-                  </Button>
+                    <Check size={14} />
+                    {isSaving ? "Saving…" : mode === "create" ? "Create" : "Save"}
+                  </button>
                 </div>
                 <div className="text-[10px]" style={{ color: "var(--gray-8)" }}>
                   {mapState.lat.toFixed(5)}, {mapState.lng.toFixed(5)}

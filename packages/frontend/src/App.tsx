@@ -22,8 +22,10 @@ import {
   Smartphone,
   Sparkles,
   MapPin,
+  LogOut,
 } from "lucide-react";
 import { useTheme } from "./context/ThemeContext";
+import { useAuth } from "./context/AuthContext";
 import ChatPanel from "./components/ChatPanel";
 import SpacesPanel from "./components/SpacesPanel";
 import MemoryPanel from "./components/MemoryPanel";
@@ -108,7 +110,7 @@ const NAV: NavEntry[] = [
       { id: "channels", label: "Channels" },
       { id: "people", label: "People" },
       { id: "zones", label: "Zones" },
-      { id: "devices", label: "Devices & Auth" },
+      { id: "devices", label: "Mobile App" },
     ],
   },
 ];
@@ -269,6 +271,7 @@ function AppShell() {
   // Which group is manually expanded (null = only auto-expand from active panel)
   const [manualExpanded, setManualExpanded] = useState<string | null>(null);
   const { resolved, toggleAppearance } = useTheme();
+  const { logout } = useAuth();
 
   const activeGroup = groupForPanel(activePanel);
 
@@ -350,18 +353,29 @@ function AppShell() {
 
         {/* Bottom section */}
         <div className="flex flex-col gap-3 mx-3 mb-4">
-          {/* Theme toggle */}
-          <Button
-            isIconOnly
-            variant="light"
-            color="default"
-            size="md"
-            onPress={toggleAppearance}
-            title={resolved === "dark" ? "Switch to light mode" : "Switch to dark mode"}
-            style={{ alignSelf: "flex-start" }}
-          >
-            {resolved === "dark" ? <Sun size={16} strokeWidth={1.5} /> : <Moon size={16} strokeWidth={1.5} />}
-          </Button>
+          {/* Theme toggle + Sign out */}
+          <div className="flex items-center gap-1">
+            <Button
+              isIconOnly
+              variant="light"
+              color="default"
+              size="md"
+              onPress={toggleAppearance}
+              title={resolved === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+            >
+              {resolved === "dark" ? <Sun size={16} strokeWidth={1.5} /> : <Moon size={16} strokeWidth={1.5} />}
+            </Button>
+            <button
+              onClick={logout}
+              className="p-2 rounded-lg cursor-pointer transition-colors duration-150"
+              style={{ color: "var(--gray-8)", background: "transparent" }}
+              onMouseEnter={(e) => { e.currentTarget.style.color = "var(--gray-11)"; e.currentTarget.style.background = "var(--gray-a3)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.color = "var(--gray-8)"; e.currentTarget.style.background = "transparent"; }}
+              title="Sign out"
+            >
+              <LogOut size={16} strokeWidth={1.5} />
+            </button>
+          </div>
 
           {/* Status + Version */}
           <SystemStatus />

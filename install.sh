@@ -121,6 +121,46 @@ fi
 
 chmod 600 "$ENV_FILE"
 
+# ── Apple MapKit (optional) ──────────────────────────────────────────
+
+MAPKIT_CONFIGURED=false
+
+printf "\n"
+printf "  Configure Apple MapKit for interactive zone maps? (y/N): "
+read -r MAPKIT_ANSWER < /dev/tty || MAPKIT_ANSWER=""
+
+if [[ "${MAPKIT_ANSWER,,}" == "y" || "${MAPKIT_ANSWER,,}" == "yes" ]]; then
+  printf "  Team ID: "
+  read -r MAPKIT_TEAM_ID < /dev/tty
+  printf "  Key ID: "
+  read -r MAPKIT_KEY_ID < /dev/tty
+  printf "  Path to .p8 key file: "
+  read -r MAPKIT_P8_PATH < /dev/tty
+
+  # Expand ~ in path
+  MAPKIT_P8_PATH="${MAPKIT_P8_PATH/#\~/$HOME}"
+
+  if [ ! -f "$MAPKIT_P8_PATH" ]; then
+    warn "File not found: $MAPKIT_P8_PATH — skipping MapKit setup"
+  elif [ -z "$MAPKIT_TEAM_ID" ] || [ -z "$MAPKIT_KEY_ID" ]; then
+    warn "Team ID and Key ID are required — skipping MapKit setup"
+  else
+    mkdir -p "$HOLMS_DIR/keys"
+    MAPKIT_FILENAME="$(basename "$MAPKIT_P8_PATH")"
+    cp "$MAPKIT_P8_PATH" "$HOLMS_DIR/keys/$MAPKIT_FILENAME"
+    chmod 600 "$HOLMS_DIR/keys/$MAPKIT_FILENAME"
+
+    {
+      echo "HOLMS_MAPKIT_KEY_PATH=/secrets/mapkit.p8"
+      echo "HOLMS_MAPKIT_KEY_ID=${MAPKIT_KEY_ID}"
+      echo "HOLMS_MAPKIT_TEAM_ID=${MAPKIT_TEAM_ID}"
+    } >> "$ENV_FILE"
+
+    MAPKIT_CONFIGURED=true
+    ok "MapKit configured (key copied to $HOLMS_DIR/keys/)"
+  fi
+fi
+
 # ── Generate docker-compose.yml ──────────────────────────────────────
 
 COMPOSE_FILE="$HOLMS_DIR/docker-compose.yml"
@@ -141,6 +181,15 @@ services:
       - ./data:/data
       - ./models:/models
       - ./plugins:/plugins
+YAML
+
+if [ "$MAPKIT_CONFIGURED" = true ]; then
+  cat >> "$COMPOSE_FILE" <<YAML
+      - ./keys/${MAPKIT_FILENAME}:/secrets/mapkit.p8:ro
+YAML
+fi
+
+cat >> "$COMPOSE_FILE" <<'YAML'
     env_file:
       - path: .env
         required: false

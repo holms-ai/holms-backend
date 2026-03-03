@@ -445,9 +445,9 @@ export default function ZoneMapPicker({
   if (error) {
     return (
       <div
-        className="rounded-lg flex items-center justify-center"
+        className="rounded-lg flex items-center justify-center h-full"
         style={{
-          height: 360,
+          minHeight: 360,
           border: "1px solid var(--gray-a5)",
           background: "var(--gray-1)",
         }}
@@ -465,12 +465,12 @@ export default function ZoneMapPicker({
   }
 
   return (
-    <div className="relative">
+    <div className="relative h-full">
       <div
         ref={containerRef}
-        className="rounded-lg overflow-hidden"
+        className="rounded-lg overflow-hidden h-full"
         style={{
-          height: 360,
+          minHeight: 360,
           border: "1px solid var(--gray-a5)",
           cursor: interactive ? "crosshair" : undefined,
         }}
