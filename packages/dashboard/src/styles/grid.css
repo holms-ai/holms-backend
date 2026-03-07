@@ -1,0 +1,51 @@
+/* ── react-grid-layout overrides ── */
+
+.react-grid-layout {
+  position: relative;
+}
+
+.react-grid-item {
+  transition: all 200ms ease;
+  will-change: transform;
+}
+
+.react-grid-item.cssTransforms {
+  transition-property: transform;
+}
+
+.react-grid-item.react-draggable-dragging {
+  z-index: 100;
+  transition: none;
+  opacity: 0.9;
+}
+
+.react-grid-item.dropping {
+  visibility: hidden;
+}
+
+.react-grid-placeholder {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  border: 2px dashed var(--glass-border);
+  border-radius: 20px;
+  opacity: 0.6;
+}
+
+/* Hide resize handle by default, show on hover */
+.react-grid-item > .react-resizable-handle {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.react-grid-item:hover > .react-resizable-handle {
+  opacity: 0.5;
+}
+
+.react-grid-item > .react-resizable-handle::after {
+  border-color: var(--text-tertiary) !important;
+}
+
+/* When NOT in edit mode, disable pointer events on handles */
+.grid-static .react-grid-item > .react-resizable-handle {
+  display: none;
+}

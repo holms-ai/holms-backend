@@ -1,0 +1,93 @@
+@import "tailwindcss";
+@custom-variant dark (&:is(.dark *));
+
+/* ── Wallpaper ── */
+
+:root {
+  --wallpaper: linear-gradient(135deg, #e0e7ff 0%, #f0fdf4 30%, #fef3c7 60%, #fce7f3 100%);
+  --glass-bg: rgba(255, 255, 255, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.7);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+  --glass-blur: 20px;
+  --glass-hover-bg: rgba(255, 255, 255, 0.72);
+
+  --on-color: #10b981;
+  --off-color: #9ca3af;
+  --warm-white: #fbbf24;
+  --cool-white: #60a5fa;
+  --unreachable: #f59e0b;
+
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --text-tertiary: #94a3b8;
+
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.dark {
+  --wallpaper: linear-gradient(135deg, #0f172a 0%, #1e1b4b 30%, #172554 60%, #0c0a09 100%);
+  --glass-bg: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  --glass-blur: 20px;
+  --glass-hover-bg: rgba(255, 255, 255, 0.1);
+
+  --on-color: #34d399;
+  --off-color: #6b7280;
+  --warm-white: #fcd34d;
+  --cool-white: #93c5fd;
+  --unreachable: #fbbf24;
+
+  --text-primary: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-tertiary: #64748b;
+}
+
+/* ── Base ── */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--wallpaper);
+  background-attachment: fixed;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow: hidden;
+  height: 100dvh;
+  overscroll-behavior: none;
+  touch-action: pan-x pan-y;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+#root {
+  height: 100dvh;
+}
+
+/* ── Animations ── */
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+@keyframes glass-in {
+  from { opacity: 0; transform: scale(0.96); backdrop-filter: blur(0); }
+  to { opacity: 1; transform: scale(1); backdrop-filter: blur(var(--glass-blur)); }
+}
+
+.animate-fade-in { animation: fade-in 0.3s ease-out both; }
+.animate-glass-in { animation: glass-in 0.3s ease-out both; }
+.animate-pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
