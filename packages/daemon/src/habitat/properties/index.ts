@@ -11,6 +11,7 @@ import { airQuality } from "./air-quality.js";
 import { schedule } from "./schedule.js";
 import { weather } from "./weather.js";
 import { location } from "./location.js";
+import { shading } from "./shading.js";
 
 export interface FieldDef {
   type: "boolean" | "number" | "string" | "object";
@@ -49,6 +50,7 @@ const domains: Record<PropertyName, PropertyDomain> = {
   schedule,
   weather,
   location,
+  shading,
 };
 
 export function getPropertyDomain(name: PropertyName): PropertyDomain | undefined {
@@ -59,4 +61,4 @@ export function getAllPropertyDomains(): PropertyDomain[] {
   return Object.values(domains);
 }
 
-export { illumination, climate, occupancy, access, media, power, water, safety, airQuality, schedule, weather, location };
+export { illumination, climate, occupancy, access, media, power, water, safety, airQuality, schedule, weather, location, shading };

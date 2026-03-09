@@ -12,7 +12,8 @@ export type PropertyName =
   | "air_quality"
   | "schedule"
   | "weather"
-  | "location";
+  | "location"
+  | "shading";
 
 export interface Space {
   id: string;

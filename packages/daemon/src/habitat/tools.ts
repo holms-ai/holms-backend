@@ -9,6 +9,7 @@ import { getPropertyDomain, getAllPropertyDomains } from "./properties/index.js"
 const PROPERTY_NAMES = [
   "illumination", "climate", "occupancy", "access",
   "media", "power", "water", "safety", "air_quality", "schedule", "weather",
+  "location", "shading",
 ] as const;
 
 /** Strip null/undefined values from objects (one level deep for arrays of objects) */

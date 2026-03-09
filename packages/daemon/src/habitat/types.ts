@@ -14,7 +14,8 @@ export type PropertyName =
   | "air_quality"
   | "schedule"
   | "weather"
-  | "location";
+  | "location"
+  | "shading";
 
 // ── Query Result ──────────────────────────────────────────────────────────
 

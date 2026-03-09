@@ -1,0 +1,5 @@
+{
+  "name": "Somfy TaHoma",
+  "version": "1.0.0",
+  "description": "Roller shutters, screens, and blinds via the Overkiz local API on TaHoma gateways"
+}

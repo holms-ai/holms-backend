@@ -1,0 +1,9 @@
+{
+  "type": "somfy",
+  "entry": "dist/index.js",
+  "multiInstance": true,
+  "setup": {
+    "discover": { "description": "Discover Somfy TaHoma gateways on the local network via mDNS" },
+    "pair": { "description": "Generate a local API token using Somfy account email and password (gateways are found automatically)" }
+  }
+}
